@@ -80,21 +80,21 @@ app.post('/travis', urlencodedParser, (req, res, next) => {});
 
 app.post('/github', jsonParser, (req, res, next) => {
   githubToChannelMapping().then((result) => {
-    console.log(result);
     const payload = req.body;
     let text;
-    const username = payload.pull_request.user.login;
+    let username;
     let pullRequestUrl;
     let pullRequestTitle;
     let action;
     let reviewState;
     let commentUrl;
-
+    console.log(req.headers)
     switch (req.headers['x-github-event']) {
       case 'pull_request':
         pullRequestUrl = payload.pull_request.url;
         pullRequestTitle = payload.pull_request.title;
         action = payload.action;
+        username = payload.pull_request.user.login;
 
         text = `*[PR created]* <@${username}> ${action} <${pullRequestUrl}|${pullRequestTitle}>`;
 
@@ -105,14 +105,26 @@ app.post('/github', jsonParser, (req, res, next) => {
         reviewState = payload.review.state;
         commentUrl = payload.review.html_url;
         pullRequestTitle = payload.pull_request.title;
+        username = payload.pull_request.user.login;
 
         text = `*[PR Reviewed]:* <@${username}> ${reviewState} <${commentUrl}|${pullRequestTitle}>`;
 
         break;
       }
-    })
 
-  res.send('');
+      return rp({
+        uri: 'https://slack.com/api/chat.postMessage',
+        method: 'POST',
+        json: true,
+        qs: {
+          token: process.env.OAUTH_TOKEN,
+          channel: result[username],
+          text: text
+        }
+      });
+
+      res.send('');
+    })
 });
 
 app.get('/', (req, res) => {
