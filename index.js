@@ -88,37 +88,38 @@ app.post('/github', jsonParser, (req, res, next) => {
     let action;
     let reviewState;
     let commentUrl;
-    console.log(req.headers)
     switch (req.headers['x-github-event']) {
-      case 'pull_request':
-        username = payload.review.user.login;
-        pullRequestUrl = payload.pull_request.url;
-        pullRequestTitle = payload.pull_request.title;
-        action = payload.action;
-        username = payload.pull_request.user.login;
+      // case 'pull_request':
+      //   username = payload.review.user.login;
+      //   pullRequestUrl = payload.pull_request.url;
+      //   pullRequestTitle = payload.pull_request.title;
+      //   action = payload.action;
+      //   username = payload.pull_request.user.login;
 
-        text = `*[PR created]* <@${username}> ${action} <${pullRequestUrl}|${pullRequestTitle}>`;
+      //   text = `*[PR created]* <@${username}> ${action} <${pullRequestUrl}|${pullRequestTitle}>`;
 
-        break;
+      //   break;
 
       case 'pull_request_review':
-        username = payload.review.user.login;
+        reviewer = payload.review.user.login;
+        username = payload.pull_request.user.login;
         reviewState = payload.review.state;
         commentUrl = payload.review.html_url;
+        commentBody = payload.review.body;
         pullRequestTitle = payload.pull_request.title;
 
-        text = `*[PR Reviewed]:* <@${username}> ${reviewState} <${commentUrl}|${pullRequestTitle}>`;
+        text = `*[PR Reviewed]:* <@${reviewer}> ${reviewState} on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
 
         break;
 
       case 'pull_request_review_comment':
-        username = payload.comment.user.login;
         reviewState = payload.review.state;
         commentUrl = payload.review.html_url;
+        commentBody = payload.review.body;
         pullRequestTitle = payload.pull_request.title;
         username = payload.pull_request.user.login;
 
-        text = `*[PR Reviewed]:* <@${username}> ${reviewState} <${commentUrl}|${pullRequestTitle}>`;
+        text = `*[PR Reviewed]:* <@${username}> ${reviewState} on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
 
         break;
       }
