@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Promise = require('bluebird');
 const rp = require('request-promise');
+const http = require('http');
 const randomColor = require('randomcolor');
 
 const app = express();
@@ -12,3 +13,9 @@ const jsonParser = bodyParser.json();
 app.post('/travis', urlencodedParser, (req, res, next) => {});
 
 app.post('/github', jsonParser, (req, res, next) => {});
+
+app.get('/', (req, res) => {
+  res.send('Hello world');
+});
+
+http.createServer(app).listen(6543);
