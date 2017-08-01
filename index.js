@@ -122,6 +122,16 @@ app.post('/github', jsonParser, (req, res, next) => {
         text = `*[PR Reviewed]:* <@${commenter}> commented on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
 
         break;
+      case 'issue_comment':
+        commentUrl = payload.issue.html_url;
+        commentBody = payload.issue.body;
+        pullRequestTitle = payload.issue.title;
+        commenter = payload.comment.user.login;
+        username = payload.issue.user.login;
+
+        text = `*[PR Reviewed]:* <@${commenter}> commented on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
+
+        break;
       }
 
       return rp({
