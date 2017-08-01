@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/jartek/violet-compressor/issues"
   },
-  "homepage": "https://github.com/jartek/violet-compressor#readme"
+  "homepage": "https://github.com/jartek/violet-compressor#readme",
+  "dependencies": {
+    "@slack/client": "^3.10.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "randomcolor": "^0.5.3",
+    "request-promise": "^4.2.1"
+  }
 }
