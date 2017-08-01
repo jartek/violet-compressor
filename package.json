@@ -1,0 +1,22 @@
+{
+  "name": "violet-compressor",
+  "version": "1.0.0",
+  "description": "Slack bot with Clifford Joseph super powers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jartek/violet-compressor.git"
+  },
+  "keywords": [
+    "slack-bot"
+  ],
+  "author": "Aaditya Suresh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jartek/violet-compressor/issues"
+  },
+  "homepage": "https://github.com/jartek/violet-compressor#readme"
+}
