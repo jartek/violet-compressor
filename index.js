@@ -113,13 +113,13 @@ app.post('/github', jsonParser, (req, res, next) => {
         break;
 
       case 'pull_request_review_comment':
-        reviewState = payload.review.state;
-        commentUrl = payload.review.html_url;
-        commentBody = payload.review.body;
+        commentUrl = payload.comment.html_url;
+        commentBody = payload.comment.body;
         pullRequestTitle = payload.pull_request.title;
+        commenter = payload.comment.user.login;
         username = payload.pull_request.user.login;
 
-        text = `*[PR Reviewed]:* <@${username}> ${reviewState} on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
+        text = `*[PR Reviewed]:* <@${commenter}> commented on <${commentUrl}|${pullRequestTitle}> with: \n` + '```' + commentBody + '```';
 
         break;
       }
