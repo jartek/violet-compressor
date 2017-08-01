@@ -83,7 +83,7 @@ app.post('/github', jsonParser, (req, res, next) => {
     console.log(result);
     const payload = req.body;
     let text;
-    const username = payload.pull_request.user.login;
+    let username;
     let pullRequestUrl;
     let pullRequestTitle;
     let action;
@@ -92,6 +92,7 @@ app.post('/github', jsonParser, (req, res, next) => {
 
     switch (req.headers['x-github-event']) {
       case 'pull_request':
+        username = payload.review.user.login;
         pullRequestUrl = payload.pull_request.url;
         pullRequestTitle = payload.pull_request.title;
         action = payload.action;
@@ -101,7 +102,17 @@ app.post('/github', jsonParser, (req, res, next) => {
         break;
 
       case 'pull_request_review':
+        username = payload.review.user.login;
+        reviewState = payload.review.state;
+        commentUrl = payload.review.html_url;
+        pullRequestTitle = payload.pull_request.title;
+
+        text = `*[PR Reviewed]:* <@${username}> ${reviewState} <${commentUrl}|${pullRequestTitle}>`;
+
+        break;
+
       case 'pull_request_review_comment':
+        username = payload.comment.user.login;
         reviewState = payload.review.state;
         commentUrl = payload.review.html_url;
         pullRequestTitle = payload.pull_request.title;
