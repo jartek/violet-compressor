@@ -14,6 +14,14 @@ const jsonParser = bodyParser.json();
 
 app.post('/travis', urlencodedParser, (req, res, next) => {});
 
+app.post('/codeclimate', urlencodedParser, (req, res, next) => {
+  const payload = req.body;
+  const errorMessage = payload.data.attributes.issue.check_name
+  const errorDescription = payload.data.attributes.issue.description
+  const message = `<${payload.data.attributes.issue.details_url}|${errorMessage}> `
+  res.send({ text: message });
+});
+
 app.post('/github', jsonParser, (req, res, next) => {
   const payload = req.body;
   let text;
