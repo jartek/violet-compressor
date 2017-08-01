@@ -109,23 +109,8 @@ app.post('/github', jsonParser, (req, res, next) => {
         text = `*[PR Reviewed]:* <@${username}> ${reviewState} <${commentUrl}|${pullRequestTitle}>`;
 
         break;
-    }
-  })
-});
-
-
-  // rp({
-  //   uri: 'https://slack.com/api/chat.postMessage',
-  //   method: 'POST',
-  //   json: true,
-  //   qs: {
-  //     token: process.env.OAUTH_TOKEN,
-  //     channel: 'D6G8PM9EX',
-  //     text
-  //   }
-  // }).then((body) => {
-  //   console.log(body)
-  // });
+      }
+    })
 
   res.send('');
 });
