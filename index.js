@@ -16,21 +16,26 @@ app.post('/travis', urlencodedParser, (req, res, next) => {});
 
 app.post('/github', jsonParser, (req, res, next) => {
   const payload = req.body;
+  let text;
 
   console.log(payload);
   console.log(req.headers);
 
   switch (req.headers['x-github-event']) {
     case 'pull_request':
-      res.send(`${payload.pull_request.user.login} ${payload.action} <${payload.pull_request.url}|${payload.pull_request.title}>`);
+      text = `${payload.pull_request.user.login} ${payload.action} <${payload.pull_request.url}|${payload.pull_request.title}>`;
+      break;
 
     case 'pull_request_review':
     case 'pull_request_review_comment':
-      res.send(`${payload.pull_request.user.login} ${payload.review.state} <${payload.review.pull_request_url}|${payload.pull_request.title}>`);
+      text = `${payload.pull_request.user.login} ${payload.review.state} <${payload.review.pull_request_url}|${payload.pull_request.title}>`;
+      break;
 
     default:
       return false;
   }
+
+  res.send({text: text});
 });
 
 
