@@ -12,7 +12,12 @@ const app = express();
 const urlencodedParser = bodyParser.urlencoded();
 const jsonParser = bodyParser.json();
 
-app.post('/travis', urlencodedParser, (req, res, next) => {});
+app.post('/travis', urlencodedParser, (req, res, next) => {
+  const payload = req.body
+  const statusMessage = payload.status_message
+  const message = `Your <${payload.pull_request}|${payload.message}> ${statusMessage}`
+  res.send({ text: message });
+});
 
 app.post('/github', jsonParser, (req, res, next) => {
   const payload = req.body;
