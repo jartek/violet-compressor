@@ -9,4 +9,6 @@ const app = express();
 const urlencodedParser = bodyParser.urlencoded();
 const jsonParser = bodyParser.json();
 
-app.post('/', urlencodedParser, (req, res, next) => {});
+app.post('/travis', urlencodedParser, (req, res, next) => {});
+
+app.post('/github', jsonParser, (req, res, next) => {});
