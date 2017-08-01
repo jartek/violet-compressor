@@ -30,9 +30,6 @@ app.post('/github', jsonParser, (req, res, next) => {
     case 'pull_request_review_comment':
       text = `${payload.pull_request.user.login} ${payload.review.state} <${payload.review.pull_request_url}|${payload.pull_request.title}>`;
       break;
-
-    default:
-      return false;
   }
 
   res.send({text: text});
