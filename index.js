@@ -18,4 +18,4 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
-http.createServer(app).listen(6543);
+http.createServer(app).listen(process.env.PORT);
